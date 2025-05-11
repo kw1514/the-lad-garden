@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - CinemachineTarget
+  - FallDetector
+  - Pushable
+  - Lab
+  - LadFruit
+  - Jax
+  - Lad
+  - UncollectedLad
+  - UIMainMenu
+  - UIInGame
+  - Card
+  - LadTree
+  - Water
+  - Coin
+  - Enemy
+  - Waypoint
+  - MovingPlatform
+  - LadParent
+  - HatShop
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - Minimap
+  - Ignore Minimap
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
