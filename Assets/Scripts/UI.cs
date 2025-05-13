@@ -182,81 +182,52 @@ public class UI : MonoBehaviour
         // JaxCounter.text = (numOfJax.ToString());
         // LadFruitCounter.text = (numOfLadFruit.ToString());
 
-        // if you do not have a hat you cannot assign it.
-        if (topHatNum < 1)
-        {
-            // when the button is not selected it is red.
-            ColorBlock cb = topHatButton.colors;
-            cb.disabledColor = Color.red;
-            topHatButton.colors = cb;
-            topHatButton.interactable = false;
-        }
-        else if (topHatNum >= 1)
-        {
-            // the lad has a top hat
-            if (ladObject.transform.GetComponent<LadGenes>().GetHat() == "top")
-            {
-                // when the button is selected it is green.
-                ColorBlock cb = topHatButton.colors;
-                cb.disabledColor = Color.green;
-                topHatButton.colors = cb;
-                topHatButton.interactable = false;
-            }
-            else if (ladObject.transform.GetComponent<LadGenes>().GetHat() != "top")
-            {
-                topHatButton.interactable = true;
-            }
-        }
+        // Update hat button states
+        UpdateHatButtonStates();
+    }
 
-        if (partyHatNum < 1)
-        {
-            // when the button is not selected it is red.
-            ColorBlock cb = partyHatButton.colors;
-            cb.disabledColor = Color.red;
-            partyHatButton.colors = cb;
-            partyHatButton.interactable = false;
-        }
-        else if (partyHatNum >= 1)
-        {
-            // the lad has a party hat
-            if (ladObject.transform.GetComponent<LadGenes>().GetHat() == "party")
-            {
-                // when the button is selected it is green.
-                ColorBlock cb = partyHatButton.colors;
-                cb.disabledColor = Color.green;
-                partyHatButton.colors = cb;
-                partyHatButton.interactable = false;
-            }
-            else if (ladObject.transform.GetComponent<LadGenes>().GetHat() != "party")
-            {
-                partyHatButton.interactable = true;
-            }
-        }
+    private void UpdateHatButtonStates()
+    {
+        string currentHat = ladObject.GetComponent<LadGenes>().GetHat();
 
-        if (pirateHatNum < 1)
-        {
-            // when the button is not selected it is red.
-            ColorBlock cb = pirateHatButton.colors;
-            cb.disabledColor = Color.red;
-            pirateHatButton.colors = cb;
-            pirateHatButton.interactable = false;
+        // Top Hat
+        bool hasTopHat = inventory.HasAvailableHat(Item.ItemType.TopHat);
+        topHatButton.interactable = hasTopHat || currentHat == "top";
+        ColorBlock topHatColors = topHatButton.colors;
+        if (currentHat == "top") {
+            topHatColors.normalColor = Color.green;
+            topHatColors.disabledColor = Color.green;
+        } else {
+            topHatColors.normalColor = Color.white;
+            topHatColors.disabledColor = Color.red;
         }
-        else if (pirateHatNum >= 1)
-        {
-           // the lad has a pirate hat
-            if (ladObject.transform.GetComponent<LadGenes>().GetHat() == "pirate")
-            {
-                // when the button is selected it is green.
-                ColorBlock cb = pirateHatButton.colors;
-                cb.disabledColor = Color.green;
-                pirateHatButton.colors = cb;
-                pirateHatButton.interactable = false;
-            }
-            else if (ladObject.transform.GetComponent<LadGenes>().GetHat() != "pirate")
-            {
-                pirateHatButton.interactable = true;
-            }
+        topHatButton.colors = topHatColors;
+
+        // Party Hat
+        bool hasPartyHat = inventory.HasAvailableHat(Item.ItemType.PartyHat);
+        partyHatButton.interactable = hasPartyHat || currentHat == "party";
+        ColorBlock partyHatColors = partyHatButton.colors;
+        if (currentHat == "party") {
+            partyHatColors.normalColor = Color.green;
+            partyHatColors.disabledColor = Color.green;
+        } else {
+            partyHatColors.normalColor = Color.white;
+            partyHatColors.disabledColor = Color.red;
         }
+        partyHatButton.colors = partyHatColors;
+
+        // Pirate Hat
+        bool hasPirateHat = inventory.HasAvailableHat(Item.ItemType.PirateHat);
+        pirateHatButton.interactable = hasPirateHat || currentHat == "pirate";
+        ColorBlock pirateHatColors = pirateHatButton.colors;
+        if (currentHat == "pirate") {
+            pirateHatColors.normalColor = Color.green;
+            pirateHatColors.disabledColor = Color.green;
+        } else {
+            pirateHatColors.normalColor = Color.white;
+            pirateHatColors.disabledColor = Color.red;
+        }
+        pirateHatButton.colors = pirateHatColors;
     }
 
     public void SetLabInventory(Inventory inventory)
@@ -524,41 +495,50 @@ public class UI : MonoBehaviour
     // set the hat button methods
     public void SetTopHatButtonOnClick()
     {
-        // // when the button is selected it is green.
-        // ColorBlock cb = topHatButton.colors;
-        // cb.disabledColor = Color.green;
-        // topHatButton.colors = cb;
-
-        // topHatButton.interactable = false;
-        // partyHatButton.interactable = true;
-        // pirateHatButton.interactable = true;
-        ladObject.GetComponent<LadGenes>().setHat("top");
+        if (ladObject.GetComponent<LadGenes>().GetHat() == "top")
+        {
+            ladObject.GetComponent<LadGenes>().setHat("none");
+            inventory.AddItem(new Item { itemType = Item.ItemType.TopHat });
+        }
+        else if (inventory.HasAvailableHat(Item.ItemType.TopHat))
+        {
+            ladObject.GetComponent<LadGenes>().setHat("top");
+            inventory.RemoveItem(new Item { itemType = Item.ItemType.TopHat });
+        }
+        ui_inventory.RefreshInventoryItems();
+        UpdateHatButtonStates();
     }
 
     public void SetPartyHatButtonOnClick()
     {
-        // // when the button is selected it is green.
-        // ColorBlock cb = partyHatButton.colors;
-        // cb.disabledColor = Color.green;
-        // partyHatButton.colors = cb;
-
-        // topHatButton.interactable = true;
-        // partyHatButton.interactable = false;
-        // pirateHatButton.interactable = true;
-        ladObject.GetComponent<LadGenes>().setHat("party");
+        if (ladObject.GetComponent<LadGenes>().GetHat() == "party")
+        {
+            ladObject.GetComponent<LadGenes>().setHat("none");
+            inventory.AddItem(new Item { itemType = Item.ItemType.PartyHat });
+        }
+        else if (inventory.HasAvailableHat(Item.ItemType.PartyHat))
+        {
+            ladObject.GetComponent<LadGenes>().setHat("party");
+            inventory.RemoveItem(new Item { itemType = Item.ItemType.PartyHat });
+        }
+        ui_inventory.RefreshInventoryItems();
+        UpdateHatButtonStates();
     }
 
     public void SetPirateHatButtonOnClick()
     {
-        // // when the button is selected it is green.
-        // ColorBlock cb = pirateHatButton.colors;
-        // cb.disabledColor = Color.green;
-        // pirateHatButton.colors = cb;
-
-        // topHatButton.interactable = true;
-        // partyHatButton.interactable = true;
-        // pirateHatButton.interactable = false;
-        ladObject.GetComponent<LadGenes>().setHat("pirate");
+        if (ladObject.GetComponent<LadGenes>().GetHat() == "pirate")
+        {
+            ladObject.GetComponent<LadGenes>().setHat("none");
+            inventory.AddItem(new Item { itemType = Item.ItemType.PirateHat });
+        }
+        else if (inventory.HasAvailableHat(Item.ItemType.PirateHat))
+        {
+            ladObject.GetComponent<LadGenes>().setHat("pirate");
+            inventory.RemoveItem(new Item { itemType = Item.ItemType.PirateHat });
+        }
+        ui_inventory.RefreshInventoryItems();
+        UpdateHatButtonStates();
     }
 
     ////////////////////////////////////// Open and close Menus /////////////////////////////////////////////////////////////////////

@@ -338,25 +338,33 @@ public class LadGenes : MonoBehaviour, ISaveable
         isParent = parent;
     }
 
-    public void setHat(string hat)
+    public void setHat(string hatType)
     {
-        if (hat == "pirate")
+        topHat = false;
+        partyHat = false;
+        pirateHat = false;
+        
+        topHatObject.SetActive(false);
+        partyHatObject.SetActive(false);
+        pirateHatObject.SetActive(false);
+
+        switch (hatType)
         {
-            topHat = false;
-            partyHat = false;
-            pirateHat = true;
-        }
-        else if (hat == "top")
-        {
-            topHat = true;
-            partyHat = false;
-            pirateHat = false;
-        }
-        else if (hat == "party")
-        {
-            topHat = false;
-            partyHat = true;
-            pirateHat = false;
+            case "top":
+                topHat = true;
+                topHatObject.SetActive(true);
+                break;
+            case "party":
+                partyHat = true;
+                partyHatObject.SetActive(true);
+                break;
+            case "pirate":
+                pirateHat = true;
+                pirateHatObject.SetActive(true);
+                break;
+            case "none":
+                // All hats already deactivated above
+                break;
         }
     }
 
@@ -372,7 +380,7 @@ public class LadGenes : MonoBehaviour, ISaveable
         }
         else if (pirateHat)
         {
-            return "pirate;";
+            return "pirate";
         }
         else
         {

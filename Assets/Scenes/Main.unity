@@ -10556,7 +10556,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3778583568213128113, guid: 88eeeb80721478444b543fa6b8648434, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -2.9999084
+      value: -2.999878
       objectReference: {fileID: 0}
     - target: {fileID: 4286834873910390923, guid: 88eeeb80721478444b543fa6b8648434, type: 3}
       propertyPath: topHatObject
@@ -36381,7 +36381,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1551575291}
-  - component: {fileID: 1551575290}
   - component: {fileID: 1551575292}
   m_Layer: 0
   m_Name: FallDetector
@@ -36390,19 +36389,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!65 &1551575290
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1551575289}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 294.2, y: 18.5, z: 250.82}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &1551575291
 Transform:
   m_ObjectHideFlags: 0

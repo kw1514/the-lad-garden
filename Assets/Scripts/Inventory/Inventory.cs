@@ -54,7 +54,7 @@ public class Inventory
         OnItemListChanged?.Invoke(this, EventArgs.Empty);
     }
 
-    public void RemoveItem(Item item)
+    public bool RemoveItem(Item item)
     {
         if (item.IsStackable())
         {
@@ -76,13 +76,22 @@ public class Inventory
             if (itemInInventory != null && itemInInventory.amount <= 0)
             {
                 itemList.Remove(itemInInventory);
+                OnItemListChanged?.Invoke(this, EventArgs.Empty);
+                return true;
             }
+            return false;
         }
         else
         {
-            itemList.Remove(item);
+            Item itemToRemove = itemList.Find(x => x.itemType == item.itemType);
+            if (itemToRemove != null)
+            {
+                itemList.Remove(itemToRemove);
+                OnItemListChanged?.Invoke(this, EventArgs.Empty);
+                return true;
+            }
+            return false;
         }
-        OnItemListChanged?.Invoke(this, EventArgs.Empty);
     }
 
     public void UseItem(Item item)
@@ -93,5 +102,17 @@ public class Inventory
     public List<Item> GetItemList()
     {
         return itemList;
+    }
+
+    public bool HasAvailableHat(Item.ItemType hatType)
+    {
+        foreach (Item item in itemList)
+        {
+            if (item.itemType == hatType)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }
