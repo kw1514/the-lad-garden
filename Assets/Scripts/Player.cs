@@ -134,19 +134,30 @@ public class Player : MonoBehaviour, ISaveable
                 jaxNum = item.amount;
                 // Debug.Log("in game jax " + jaxAmount);
             }
-            else if (item.itemType == Item.ItemType.PirateHat)
+        }
+
+        // Reset hat numbers to count only those in inventory
+        pirateHatNum = 0;
+        partyHatNum = 0;
+        topHatNum = 0;
+
+        // Count hats in inventory
+        foreach (Item item in inventory.GetItemList())
+        {
+            if (item.itemType == Item.ItemType.PirateHat)
             {
-                pirateHatNum = item.amount;
+                pirateHatNum++;
             }
             else if (item.itemType == Item.ItemType.PartyHat)
             {
-                partyHatNum = item.amount;
+                partyHatNum++;
             }
             else if (item.itemType == Item.ItemType.TopHat)
             {
-                topHatNum = item.amount;
+                topHatNum++;
             }
         }
+
         jaxCounter.SetText(jaxNum.ToString());
         fruitCounter.SetText(fruitNum.ToString());
     }
