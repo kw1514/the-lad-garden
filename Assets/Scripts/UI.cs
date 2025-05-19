@@ -275,24 +275,42 @@ public class UI : MonoBehaviour
         lad2ButtonClicked = true;
     }
 
-
     // is attached to the combine button
     public void CombineButtonOnClick()
     {
-        // subtracts the one lad fruit from inventory
+        // Find the lad fruit item first
+        Item ladFruitItem = null;
         foreach (Item item in inventory.GetItemList())
         {
             if (item.itemType == Item.ItemType.LadFruit)
             {
-                item.amount = item.amount - 1;
-                numOfLadFruit = numOfLadFruit - 1;
-
-                if (item.amount == 0)
-                {
-                    inventory.RemoveItem(item);
-                }
-                ui_inventory.RefreshInventoryItems();
+                ladFruitItem = item;
+                break;
             }
+        }
+
+        // Now safely modify the inventory outside the enumeration
+        if (ladFruitItem != null)
+        {
+            ladFruitItem.amount--;
+            numOfLadFruit--;
+
+            if (ladFruitItem.amount == 0)
+            {
+                inventory.RemoveItem(ladFruitItem);
+            }
+            ui_inventory.RefreshInventoryItems();
+            
+            // Force refresh the player's UI counters
+            Player player = FindObjectOfType<Player>();
+            if (player != null)
+            {
+                player.fruitNum = numOfLadFruit;
+                player.fruitCounter.SetText(numOfLadFruit.ToString());
+            }
+            
+            CloseLab();
+            OpenLabCreationMenu();
         }
     }
 
