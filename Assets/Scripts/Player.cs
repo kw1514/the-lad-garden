@@ -42,6 +42,11 @@ public class Player : MonoBehaviour, ISaveable
         audioPlayer = FindObjectOfType<AudioManager>();
         levelManager = FindObjectOfType<LevelManager>();
 
+        // Deactivate parent lads immediately after finding them
+        foreach (GameObject lad in ladInventory.parentLadList)
+        {
+            lad.SetActive(false);
+        }
 
         respawnPoint = transform.position;
         Debug.Log(respawnPoint);
